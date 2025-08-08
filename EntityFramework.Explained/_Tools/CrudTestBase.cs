@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,8 +21,8 @@ public abstract class CrudTestBase<TContext, TEntity>
 
     protected abstract TContext CreateContext(DbContextOptions<TContext> options);
     protected abstract TEntity CreateEntity();
-    protected abstract Task ModifyEntityAsync(TEntity entity);
-    protected abstract Task AssertUpdatedAsync(TEntity entity);
+    protected abstract Task ModifyEntityAsync(TEntity entity, TContext context);
+    protected abstract Task AssertUpdatedAsync(TEntity entity, TContext context);
     protected abstract DbSet<TEntity> GetDbSet(TContext context);
 
     [Fact]
@@ -55,7 +56,7 @@ public abstract class CrudTestBase<TContext, TEntity>
         using (var context = CreateContext(options))
         {
             var toUpdate = await GetDbSet(context).FindAsync(GetPrimaryKey(entity));
-            await ModifyEntityAsync(toUpdate!);
+            await ModifyEntityAsync(toUpdate!, context);
             await context.SaveChangesAsync();
         }
 
@@ -63,7 +64,7 @@ public abstract class CrudTestBase<TContext, TEntity>
         using (var context = CreateContext(options))
         {
             var updated = await GetDbSet(context).FindAsync(GetPrimaryKey(entity));
-            await AssertUpdatedAsync(updated!);
+            await AssertUpdatedAsync(updated!, context);
         }
 
         // Delete
@@ -83,4 +84,10 @@ public abstract class CrudTestBase<TContext, TEntity>
     }
 
     protected abstract object[] GetPrimaryKey(TEntity entity);
+
+    protected void Load<TProp>(TContext context, TEntity entity, Expression<Func<TEntity, TProp>> selector)
+    where TProp : class
+    {
+        context.Entry(entity!).Reference(selector!).Load();
+    }
 }
