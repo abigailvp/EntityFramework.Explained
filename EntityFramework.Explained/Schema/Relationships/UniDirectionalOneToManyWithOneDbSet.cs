@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using QuickPulse.Explains;
 using QuickPulse.Explains.Text;
 
-namespace EntityFramework.Explained.Nullability;
+namespace EntityFramework.Explained.Schema.Relationships;
 
 [DocFile]
 [DocContent("Because the entity used in the `DbSet` has a collection of another entity type, the latter are mapped as well.")]

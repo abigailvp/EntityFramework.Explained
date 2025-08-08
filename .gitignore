@@ -58,3 +58,6 @@ nunit-*.xml
 
 # logs
 *.log
+
+# personal scripts
+doc.ps1

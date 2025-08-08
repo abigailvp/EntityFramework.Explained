@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using QuickPulse.Explains;
 using QuickPulse.Explains.Text;
 
-namespace EntityFramework.Explained.Conventions;
+namespace EntityFramework.Explained.Schema.Conventions;
 
 [DocFile]
 public class DefaultStringLength

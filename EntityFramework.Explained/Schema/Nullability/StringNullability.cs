@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using QuickPulse.Explains;
 using QuickPulse.Explains.Text;
 
-namespace EntityFramework.Explained.Nullability;
+namespace EntityFramework.Explained.Schema.Nullability;
 
 [DocFile]
 public class StringNullability

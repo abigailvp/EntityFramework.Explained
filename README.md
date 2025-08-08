@@ -1,70 +1,47 @@
 # EntityFramework.Explained
-> Because We Need to Talk About Kevin.
+> Because We Need to Talk About Kevin.  
 
-
-A minimal test catalog for explaining how EF Core behaves in real-world schema output.
-Each file isolates a single behavior.
-
-## Folder Structure
-
-```text
-EntityFramework.Explained/
-├── Conventions/
-│   ├── DefaultStringLength.cs
-│   ├── RequiredAttribute.cs
-│   └── ColumnAttributeOverrides.cs
-│
-├── Nullability/
-│   ├── StringNullability.cs
-│   ├── IntNullability.cs
-│   ├── ClassNullability.cs
-│   └── Etc.cs
-│
-├── Relationships/
-│   ├── OneToMany.cs
-│   ├── ManyToMany.cs
-│   └── ShadowForeignKeys.cs
-│
-├── Indexes/
-│   ├── DefaultIndexNames.cs
-│   └── UniqueConstraints.cs
-│
-├── Inheritance/
-│   ├── TablePerHierarchy.cs
-│   ├── TablePerType.cs
-│   └── DiscriminatorColumn.cs
-│
-├── SqlGeneration/
-│   ├── IdentityStrategy.cs
-│   ├── DefaultConstraints.cs
-│   └── ComputedColumns.cs
-│
-├── _Tools/
-│   └── TestContexts/
-│       ├── TestSqlServerContext.cs
-│       ├── TestSqliteContext.cs
-│       └── BaseContext.cs
-│
-├── EntityFramework.Explained.csproj
+## Runtime Behaviour
+### List Properties
+EF Core does not detect in-place mutations to, for instance, a `List<string>` when only a value converter is used. The property reference remains unchanged, so change tracking is not triggered and `SaveChanges()` persists nothing.  
+```csharp
+var converter = new ValueConverter<List<string>, string>(
+        v => string.Join(';', v),
+        v => v.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList()
+    );
+entityTypeBuilder.Property(c => c.StringListProperty)
+    .HasConversion(converter);
 ```
-Etcetera ...
-
-## Guidelines
-
-- Each file = one behavior, one `[DocFile]`
-- Each `[Fact]` = one database (e.g. SqlServer, Sqlite)
-- Use `GenerateCreateScript()` for schema output
-- Keep test classes short, self-contained, with inline models
-- Use helper like `AsAssertsToLogFile()` to scaffold output comparison
-
-## Naming suggestions
-
-| Folder         | Focus                        |
-|----------------|-------------------------------|
-| Conventions    | Data annotations, fluent API |
-| Nullability    | `string?` vs `string` etc.    |
-| Relationships  | Nav props, FK behavior        |
-| Indexes        | Index naming, uniqueness      |
-| Inheritance    | TPH/TPT mapping               |
-| SqlGeneration  | What actually gets written    |
-
+Adding a `ValueComparer<List<string>>` to the mapping allows EF Core to detect in-place list mutations. The comparer inspects the list's contents, so `SaveChanges()` correctly persists changes without replacing the list instance.  
+```csharp
+var converter = new ValueConverter<List<string>, string>(
+        v => string.Join(';', v),
+        v => v.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList()
+    );
+var comparer = new ValueComparer<List<string>>(
+    (c1, c2) => c1!.SequenceEqual(c2!),
+    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+    c => c.ToList()
+);
+entityTypeBuilder.Property(c => c.StringListProperty)
+    .HasConversion(converter)
+    .Metadata.SetValueComparer(comparer);
+```
+### Default String Length
+#### Sql Server
+Generates `nvarchar(max)`.
+#### Sqlite
+Generates `TEXT`.
+### String Nullability
+#### Sql Server
+`string` Generates `NOT NULL`.
+`string?` Generates `NULL`.
+#### Sqlite
+`string` Generates `NOT NULL`.
+`string?` Generates `NULL`.
+### Uni Directional One To Many With One Db Set
+Because the entity used in the `DbSet` has a collection of another entity type, the latter are mapped as well.
+#### Sql Server
+EF infers and includes related entities in the schema even when only one side is explicitly registered in the `DbContext`.
+#### Sqlite
+Same behavior as SqlServer, relationship discovery pulls in the `Blog` entity despite only registering `Post`
