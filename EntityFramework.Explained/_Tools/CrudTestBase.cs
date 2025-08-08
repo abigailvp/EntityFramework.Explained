@@ -20,6 +20,7 @@ public abstract class CrudTestBase<TContext, TEntity>
             .Options;
 
     protected abstract TContext CreateContext(DbContextOptions<TContext> options);
+    protected virtual Task SeedAsync(TContext context) => Task.CompletedTask;
     protected abstract TEntity CreateEntity();
     protected abstract Task ModifyEntityAsync(TEntity entity, TContext context);
     protected abstract Task AssertUpdatedAsync(TEntity entity, TContext context);
@@ -30,9 +31,11 @@ public abstract class CrudTestBase<TContext, TEntity>
     {
         // Arrange
         var options = CreateOptions();
+
         using (var context = CreateContext(options))
         {
             await context.Database.EnsureCreatedAsync();
+            await SeedAsync(context);
         }
 
         TEntity entity;
