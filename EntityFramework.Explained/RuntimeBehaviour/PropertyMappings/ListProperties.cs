@@ -21,7 +21,7 @@ public class ListProperties
     "EF Core does not detect in-place mutations to, for instance, a `List<string>` " +
     "when only a value converter is used. The property reference remains unchanged, " +
     "so change tracking is not triggered and `SaveChanges()` persists nothing.  ")]
-    [DocCodeExample(nameof(MapThingNoValueComparer))]
+    [DocCodeExample(typeof(ListProperties), nameof(MapThingNoValueComparer))]
     public async Task Update_not_performed_without_ValueComparer()
     {
         var connection = new SqliteConnection("DataSource=:memory:");
@@ -85,7 +85,7 @@ public class ListProperties
         "Adding a `ValueComparer<List<string>>` to the mapping allows EF Core " +
         "to detect in-place list mutations. The comparer inspects the list's contents, " +
         "so `SaveChanges()` correctly persists changes without replacing the list instance.  ")]
-    [DocCodeExample(nameof(MapThingWithValueComparer))]
+    [DocCodeExample(typeof(ListProperties), nameof(MapThingWithValueComparer))]
     public async Task Update_is_performed_with_ValueComparer()
     {
         var connection = new SqliteConnection("DataSource=:memory:");
