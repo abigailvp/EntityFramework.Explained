@@ -2,7 +2,6 @@
 > Because We Need to Talk About Kevin.  
 
 ## Runtime Behaviour
-## Schema
 ### List Properties
 EF Core does not detect in-place mutations to, for instance, a `List<string>` when only a value converter is used. The property reference remains unchanged, so change tracking is not triggered and `SaveChanges()` persists nothing.  
 ```csharp
@@ -28,6 +27,7 @@ entityTypeBuilder.Property(c => c.StringListProperty)
     .HasConversion(converter)
     .Metadata.SetValueComparer(comparer);
 ```
+## Schema
 ### Default String Length
 #### Sql Server
 Generates `nvarchar(max)`.
