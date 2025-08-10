@@ -58,7 +58,7 @@ public class ListProperties
         }
     }
 
-    [DocExample]
+    [DocSnippet]
     private static void MapThingNoValueComparer(EntityTypeBuilder<Thing> entityTypeBuilder)
     {
         var converter = new ValueConverter<List<string>, string>(
@@ -122,7 +122,7 @@ public class ListProperties
         }
     }
 
-    [DocExample]
+    [DocSnippet]
     private static void MapThingWithValueComparer(EntityTypeBuilder<Thing> entityTypeBuilder)
     {
         var converter = new ValueConverter<List<string>, string>(

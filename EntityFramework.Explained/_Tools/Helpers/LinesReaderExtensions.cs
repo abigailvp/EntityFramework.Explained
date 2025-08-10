@@ -13,10 +13,4 @@ public static class LinesReaderExtensions
                 return line;
         }
     }
-
-    // public static LinesReader StartReadingAt(this string text, string fragment)
-    // {
-    //     var reader
-    //     return LinesReader.FromText(text).SkipToLineContaining(fragment);
-    // }
 }
