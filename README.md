@@ -28,6 +28,15 @@ entityTypeBuilder.Property(c => c.StringListProperty)
     .Metadata.SetValueComparer(comparer);
 ```
 ## Schema
+### Default Index Names
+#### Sql Server
+has entity with a default index
+#### Sql Server
+has entity with combined sorted index
+#### Sqlite
+has entity with a default index
+#### Sqlite
+has entity with combined sorted index
 ### Default String Length
 #### Sql Server
 Generates `nvarchar(max)`.
