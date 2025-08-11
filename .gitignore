@@ -59,5 +59,9 @@ nunit-*.xml
 # logs
 *.log
 
+# temps
+temp*
+*.tmp
+
 # personal scripts
 doc.ps1

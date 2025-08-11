@@ -1,13 +1,11 @@
 # EntityFramework.Explained Schema
 
-
 A minimal test catalog for explaining how EF Core behaves in real-world schema output.
 Each file isolates a single behavior.
 
 ## Folder Structure
 
 ```text
-Schema/
 ├── Conventions/
 │   ├── DefaultStringLength.cs
 │   ├── RequiredAttribute.cs
@@ -16,8 +14,7 @@ Schema/
 ├── Nullability/
 │   ├── StringNullability.cs
 │   ├── IntNullability.cs
-│   ├── ClassNullability.cs
-│   └── Etc.cs
+│   └── ClassNullability.cs
 │
 ├── Relationships/
 │   ├── OneToMany.cs
@@ -33,18 +30,10 @@ Schema/
 │   ├── TablePerType.cs
 │   └── DiscriminatorColumn.cs
 │
-├── SqlGeneration/
-│   ├── IdentityStrategy.cs
-│   ├── DefaultConstraints.cs
-│   └── ComputedColumns.cs
-│
-├── _Tools/
-│   └── TestContexts/
-│       ├── TestSqlServerContext.cs
-│       ├── TestSqliteContext.cs
-│       └── BaseContext.cs
-│
-├── EntityFramework.Explained.csproj
+└── SqlGeneration/
+    ├── IdentityStrategy.cs
+    ├── DefaultConstraints.cs
+    └── ComputedColumns.cs
 ```
 Etcetera ...
 
