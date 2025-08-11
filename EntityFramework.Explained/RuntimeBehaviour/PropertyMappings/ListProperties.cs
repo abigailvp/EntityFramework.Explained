@@ -7,7 +7,7 @@ using QuickPulse.Explains;
 
 namespace EntityFramework.Explained.RuntimeBehaviour.PropertyMappings;
 
-[DocFile]
+[DocFile] //te lezen in read me > testen om te zien dat valuecomparer nodig is (met converter) om lijsten te gebruiken in ef core
 public class ListProperties
 {
     public class Thing
