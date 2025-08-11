@@ -35,11 +35,13 @@ entityTypeBuilder.Property(c => c.StringListProperty)
 Generates `nvarchar(max)`.
 #### Sqlite
 Generates `TEXT`.
-### Required Attributes
+### Int Nullability
 #### Sql Server
-Generates `nvarchar(max)`.
+`int` Generates `int NOT NULL`.
+`int?` Generates `int NULL`.
 #### Sqlite
-Generates `TEXT`.
+`int` Generates `INTEGER NOT NULL`.
+`int?` Generates `INTEGER NULL`
 ### String Nullability
 #### Sql Server
 `string` Generates `NOT NULL`.
