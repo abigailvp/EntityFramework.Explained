@@ -5,6 +5,12 @@
 * [QuickPulse.Show](https://github.com/kilfour/QuickPulse.Show)
 ## Runtime Behaviour
 ## Schema
+### Data Annotations
+#### Sql Server - data annotations
+looking for differences when using data annotations
+#### Sqlite - data annotations
+looking for differences when using data annotations
+### Default String Length
 ### Column Attributes Overrides
 #### Sql Server
 Generates table with chosen column names of the right type in the given order.
@@ -40,6 +46,10 @@ Generates required properties that will be created even if they are null or empt
 #### Sqlite
 `string` Generates `NOT NULL`.
 `string?` Generates `NULL`.
+### Bi Directional One To Many With Two Db Sets
+Because the entity used in the `DbSet` has a collection of another entity type, the latter are mapped as well.
+#### Sql Server - bidirectional
+EF infers and includes related entities in bidirectional relationship in the schema even when only one side is explicitly registered in the `DbContext`.
 ### Bi Directional One To Many
 Because the entity used in the `DbSet` has a collection of another entity type, the latter are mapped as well.
 #### Sql Server - bidirectional
