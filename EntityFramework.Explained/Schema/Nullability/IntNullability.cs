@@ -18,7 +18,7 @@ public class IntNullability
 
     [Fact]
     [DocHeader("Sql Server")]
-    [DocContent("`int` Generates `NOT NULL`.")]
+    [DocContent("`int` Generates `int NOT NULL`.")]
     public void SqlServer()
     {
         using var context = new TestSqlServerContext<Thing>();
