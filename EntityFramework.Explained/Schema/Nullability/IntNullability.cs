@@ -49,7 +49,7 @@ public class IntNullability
     }
 
     [Fact]
-    [DocContent("`int?` Generates `INTEGER NULL`.")]
+    [DocContent("`int?` Generates `INTEGER NULL`")]
     public void SqliteNullable()
     {
         using var context = new TestSqliteContext<Thing>();
