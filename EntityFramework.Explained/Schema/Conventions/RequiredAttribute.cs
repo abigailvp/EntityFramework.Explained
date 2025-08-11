@@ -27,7 +27,7 @@ public class RequiredAttributes
     [Fact]
     [DocHeader("Sql Server")] //wordt header
     [DocContent("Generates `nvarchar(max)`.")] //wordt paragraaf
-    public void SqlServerUsesErrorMessage()
+    public void SqlServer()
     {
         using var context = new TestSqlServerContext<Thing>();
         var sql = context.Database.GenerateCreateScript();

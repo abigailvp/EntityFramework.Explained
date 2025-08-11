@@ -28,14 +28,17 @@ entityTypeBuilder.Property(c => c.StringListProperty)
     .Metadata.SetValueComparer(comparer);
 ```
 ## Schema
+### Column Attributes Overrides
+#### Sql Server
+Generates `nvarchar(max)`.
+#### Sqlite
+Generates `TEXT`.
 ### Default String Length
 #### Sql Server
 Generates `nvarchar(max)`.
 #### Sqlite
 Generates `TEXT`.
 ### Required Attributes
-#### Sql Server
-Generates `nvarchar(max)`.
 #### Sql Server
 Generates `nvarchar(max)`.
 #### Sqlite
