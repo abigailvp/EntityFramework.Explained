@@ -36,6 +36,8 @@ Generates `TEXT`.
 ### Required Attributes
 #### Sql Server
 Generates `nvarchar(max)`.
+#### Sql Server
+Generates `nvarchar(max)`.
 #### Sqlite
 Generates `TEXT`.
 ### String Nullability

@@ -18,22 +18,27 @@ public class RequiredAttributes
 
         [Required]
         public string StringProperty { get; set; } = default!;
+
+        [Required(ErrorMessage = "lol")] //errormessage zit niet in table, enkel in modelvalidatie
+        public string? StringProp { get; set; } = "";
     }
+
 
     [Fact]
     [DocHeader("Sql Server")] //wordt header
     [DocContent("Generates `nvarchar(max)`.")] //wordt paragraaf
-    public void SqlServer()
+    public void SqlServerUsesErrorMessage()
     {
         using var context = new TestSqlServerContext<Thing>();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql); //hulpfunctie die test schrijft in quickpulse file
-        // reader.AsAssertsToLogFile(); //maakt nieuwe file
+        reader.AsAssertsToLogFile(); //maakt nieuwe file
         // Assert.Contains("[Id] int NOT NULL IDENTITY, ", reader.SkipToLineContaining("Id"));
         // Assert.Contains("[StringProperty] nvarchar(max) NOT NULL", reader.SkipToLineContaining("StringProperty"));
         Assert.Equal("CREATE TABLE [Items] (", reader.NextLine());
         Assert.Equal("    [Id] int NOT NULL IDENTITY,", reader.NextLine());
         Assert.Equal("    [StringProperty] nvarchar(max) NOT NULL,", reader.NextLine()); //not null want required
+        Assert.Contains("    [StringProp] nvarchar(max) NOT NULL,", reader.NextLine()); //not null want door required is "" toch een waarde
         Assert.Equal("    CONSTRAINT [PK_Items] PRIMARY KEY ([Id])", reader.NextLine()); //automatisch id maken
         Assert.Equal(");", reader.NextLine());
         Assert.Equal("GO", reader.NextLine());
@@ -52,7 +57,7 @@ public class RequiredAttributes
         using var context = new TestSqliteContext<Thing>();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
-        reader.AsAssertsToLogFile();
+        // reader.AsAssertsToLogFile();
         Assert.Contains("\"StringProperty\" TEXT NOT NULL", reader.SkipToLineContaining("StringProperty"));
     }
 }
