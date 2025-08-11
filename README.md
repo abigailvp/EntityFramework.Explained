@@ -5,6 +5,15 @@
 * [QuickPulse.Show](https://github.com/kilfour/QuickPulse.Show)
 ## Runtime Behaviour
 ## Schema
+### Default Index Names
+#### Sql Server
+has entity with a default index
+#### Sql Server
+has entity with combined sorted index
+#### Sqlite
+has entity with a default index
+#### Sqlite
+has entity with combined sorted index
 ### Data Annotations
 #### Sql Server - data annotations
 looking for differences when using data annotations
