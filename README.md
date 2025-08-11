@@ -35,6 +35,17 @@ entityTypeBuilder.Property(c => c.StringListProperty)
 Generates `nvarchar(max)`.
 #### Sqlite
 Generates `TEXT`.
+### Class Nullability
+#### Sql Server
+`NullThing` Generates `NULL`.
+`SomeThing` Generates `NOT NULL`.
+`SomeThingId` adds `ON DELETE CASCADE` to the foreign key definition
+`NullThing` does not add `ON DELETE CASCADE` to the foreign key definition
+#### Sq Lite
+`NullThing` Generates `NULL`.
+`SomeThing` Generates `NOT NULL`.
+`SomeThingId` have parameter in the foreign key definition
+`NullThing` don't have parameter in the foreign key definition
 ### Int Nullability
 #### Sql Server
 `int` Generates `int NOT NULL`.
@@ -42,6 +53,7 @@ Generates `TEXT`.
 #### Sqlite
 `int` Generates `INTEGER NOT NULL`.
 `int?` Generates `INTEGER NULL`
+>>>>>>> e63269a (updated readme.md)
 ### String Nullability
 #### Sql Server
 `string` Generates `NOT NULL`.
