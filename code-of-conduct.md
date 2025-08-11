@@ -1,41 +1,33 @@
 # Code of Conduct
-
 > Voor alle studententeams/repo’s in dit vak. Dit document beschrijft **hoe** we samenwerken (workflow), **wat** we verwachten (kwaliteit), en **hoe** we elkaar helpen (review & communicatie).
 
 ## 1) Kernwaarden
-
 * **Respect:** Feedback is op de code, niet op de persoon.
 * **Transparantie:** Kleine, frequente commits met duidelijke boodschappen.
 * **Samen leren:** Stel vragen vroeg, deel oplossingen en mislukkingen.
 * **Eigenaarschap:** Jij bent verantwoordelijk voor jouw werk *en* voor het teamresultaat.
 
 ## 2) Repo‑model
-
 * **Fork & PR‑model:** Studenten **forken** de hoofdrepo (`upstream`). Alle bijdragen gaan via **Pull Requests** vanuit je **fork** naar `main` van de upstream.
 * **Branch‑strategie:**
-
   * `main`: altijd **groen** (builds slagen, tests groen).
   * Feature branches: `feature/<korte‑beschrijving>`
   * Bugfix branches: `fix/<issue‑nummer‑of‑korte‑beschrijving>`
   * Hotfix (kritieke prod‑bug): `hotfix/<beschrijving>`
 
 ## 3) Standaard workflow (stap‑voor‑stap)
-
 1. **Fork** de hoofrepo op GitHub.
 2. **Clone** je fork:
-
    ```bash
    git clone https://github.com/<jouw-account>/<repo>.git
    cd <repo>
    ```
 3. **Koppel upstream** (éénmalig):
-
    ```bash
    git remote add upstream https://github.com/<organisatie>/<repo>.git
    git fetch upstream
    ```
 4. **Sync met upstream/main** (regelmatig):
-
    ```bash
    git checkout main
    git pull --ff-only upstream main
@@ -48,7 +40,6 @@
 6. **Codeer & test** lokaal. Voeg unit tests toe of actualiseer bestaande tests.
 7. **Commit klein & vaak** (zie commit‑stijl hieronder).
 8. **Push** je branch:
-
    ```bash
    git push -u origin feature/<korte-beschrijving>
    ```
@@ -65,9 +56,7 @@
     git branch -d feature/<korte-beschrijving>
     git push origin --delete feature/<korte-beschrijving>
     ```
-
 ## 4) Commit‑stijl (Conventional Commits, kort en informatief)
-
 **Formaat:** `type(scope): korte beschrijving`
 * **types:** `feat`, `fix`, `docs`, `refactor`, `build`, `ci`.
 * **scope:**  map/onderdeel (`schema`, `behaviour`).
@@ -75,7 +64,6 @@
 * **footer:** `BREAKING CHANGE:` of `Fixes #123`.
 
 **Voorbeeld:**
-
 ```
 feat(schema): initial explanation of ClassNullability
 Using a simple model.
