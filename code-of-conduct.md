@@ -130,8 +130,8 @@ Fixes #42.
 * **Readme up‑to‑date:** how‑to run, how‑to test. Geen probleem in dit geval normaal.
 
 ## 14) Communicatie
-* **Kanaal:** Discord (projectkanaal). Korte vragen => chat, complexe zaken => call + samenvatting in issue/PR.
-* **Reactietijd:** tijdens lesuren redelijk snel; buiten uren best‑effort.
+* **Kanaal:** Discord ([projectkanaal](https://discord.com/channels/707489155835232276/1404303820573380780)). Korte vragen => chat, complexe zaken => call + samenvatting in issue/PR.
+* **Reactietijd:** best‑effort.
 * **Besluitvorming:** vastleggen in issue/PR‑beschrijving.
 
 ## 15) AI‑gebruik (zoals ChatGPT)
@@ -141,10 +141,8 @@ Fixes #42.
 
 ## 16) Escalatie & support
 
-* Blokkerende problemen > 1 uur? **Escaleren**: noteer wat je probeerde, foutmeldingen, hypothesen; tag docent/coach in het issue.
-
+* Blokkerende problemen > 15 minuten? **Escaleren**: noteer wat je probeerde, foutmeldingen, hypothesen; tag docent/coach in het issue.
 
 ### TL;DR
-
 Fork → Sync → Branch → Code + Tests → Small Commits → Push → PR → Review → Groen CI → Squash‑Merge → Cleanup.
 
