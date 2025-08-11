@@ -1,13 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
-using EntityFramework.Explained._Tools.Helpers;
 using EntityFramework.Explained._Tools.TestContexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QuickPulse.Explains;
 using QuickPulse.Explains.Text;
-using QuickPulse.Show;
 
 namespace EntityFramework.Explained.Schema.Conventions;
 
@@ -32,32 +27,33 @@ public class ColumnAttributesOverrides
 
     [Fact]
     [DocHeader("Sql Server")]
-    [DocContent("Generates `nvarchar(max)`.")]
+    [DocContent("Generates table with chosen column names of the right type in the given order.")]
     public void SqlServerFollowsOrder_ChangesColumnName()
     {
         using var context = new TestSqlServerContext<Student>();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
-        // reader.AsAssertsToLogFile();
 
         Assert.Equal("CREATE TABLE [Items] (", reader.NextLine());
         Assert.Equal("    [Id] int NOT NULL IDENTITY,", reader.NextLine());
-        Assert.Equal("    [Age] int NOT NULL,", reader.SkipToLineContaining("int"));
+        Assert.Equal("    [Name] nvarchar(max) NOT NULL,", reader.NextLine());
+        Assert.Equal("    [Age] int NOT NULL,", reader.NextLine());
         Assert.Equal("    [Birthdate] datetime2 NOT NULL,", reader.NextLine());
-        Assert.Equal("    CONSTRAINT [PK_Items] PRIMARY KEY ([Id])", reader.NextLine());
 
     }
 
     [Fact]
     [DocHeader("Sqlite")]
-    [DocContent("Generates `TEXT`.")]
+    [DocContent("Generates table with chosen column names of the right type (look at date :O) in the given order.")]
     public void SqliteFollowsOrder_ChangesColumnName_AndHasType()
     {
         using var context = new TestSqliteContext<Student>();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
-        // reader.AsAssertsToLogFile();
-        Assert.Contains("\"Name\" TEXT NOT NULL", reader.SkipToLineContaining("Name"));
+
+        Assert.Equal("CREATE TABLE \"Items\" (", reader.NextLine());
+        Assert.Equal("    \"Id\" INTEGER NOT NULL CONSTRAINT \"PK_Items\" PRIMARY KEY AUTOINCREMENT,", reader.NextLine());
+        Assert.Contains("\"Name\" TEXT NOT NULL", reader.NextLine());
         Assert.Contains("\"Age\" INTEGER NOT NULL", reader.NextLine());
         Assert.Contains("\"Birthdate\" TEXT NOT NULL", reader.NextLine());
     }
