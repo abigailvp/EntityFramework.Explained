@@ -10,10 +10,10 @@ namespace EntityFramework.Explained.Schema.Conventions;
 [DocFile]
 [DocFileHeader("Data Annotations: `[Range(...)]`")]
 [DocContent("**Given:**")]
-[DocCodeExample(typeof(Thing))]
+[DocExample(typeof(Thing))]
 public class DataAnnotations
 {
-    [DocExample]
+    [CodeExample]
     public class Thing
     {
         public int Id { get; set; }

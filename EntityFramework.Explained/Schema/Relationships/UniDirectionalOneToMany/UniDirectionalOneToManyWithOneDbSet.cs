@@ -12,14 +12,14 @@ EF infers and includes related entities in the schema even when only one side is
 ")]
 public class UniDirectionalOneToManyWithOneDbSet
 {
-    [DocExample]
+    [CodeExample]
     public class Post
     {
         public int Id { get; set; }
         public Blog Blog { get; set; } = default!;
     }
 
-    [DocExample]
+    [CodeExample]
     public class Blog
     {
         public int Id { get; set; }
@@ -27,15 +27,15 @@ public class UniDirectionalOneToManyWithOneDbSet
 
     [Fact]
     [DocContent("When using the following simple model of *one* `Blog` containing *many* `Posts`: ")]
-    [DocCodeExample(typeof(Blog))]
-    [DocCodeExample(typeof(Post))]
+    [DocExample(typeof(Blog))]
+    [DocExample(typeof(Post))]
     [DocContent("And then adding a `DbSet<Blog>` to the `DbContext` EF generates the following ddl for Sql Server:  \n")]
     [DocContent("**Blog:**")]
-    [DocCodeExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForBlog))]
+    [DocExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForBlog))]
     [DocContent("**Post:**")]
-    [DocCodeExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForPost))]
+    [DocExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForPost))]
     [DocContent("**Index:**")]
-    [DocCodeExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForIndex))]
+    [DocExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForIndex))]
     [DocContent("*Note:* No other mappings were added.")]
     public void SqlServer()
     {
@@ -57,7 +57,7 @@ public class UniDirectionalOneToManyWithOneDbSet
         Assert.True(reader.EndOfContent());
     }
 
-    [DocSnippet]
+    [CodeSnippet]
     [DocReplace("return", "")]
     private string[] ExpectedDdlScriptForBlog()
     {
@@ -70,7 +70,7 @@ public class UniDirectionalOneToManyWithOneDbSet
             ];
     }
 
-    [DocSnippet]
+    [CodeSnippet]
     [DocReplace("return", "")]
     [DocReplace("Item", "Post")]
     private string[] ExpectedDdlScriptForPost()
@@ -86,7 +86,7 @@ public class UniDirectionalOneToManyWithOneDbSet
             ];
     }
 
-    [DocSnippet]
+    [CodeSnippet]
     [DocReplace("return", "")]
     [DocReplace("Item", "Post")]
     private string ExpectedDdlScriptForIndex()
