@@ -39,6 +39,17 @@ has entity with a default index
 #### Sql Server
 has entity with combined sorted index
 #### Sqlite
+Generates `TEXT`.
+### Generic Identity
+#### Sql Server - Generic Identity
+looking what schema does for Generic Identity without mapping
+#### Sqlite - Generic Identity
+looking what schema does for Generic Identity without mapping
+#### Sql Server - Generic Identity
+looking what schema does for Generic Identity with mapping
+#### Sqlite - Generic Identity
+looking what schema does for Generic Identity with mapping
+=======
 has entity with a default index
 #### Sqlite
 has entity with combined sorted index
