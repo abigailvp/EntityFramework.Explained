@@ -9,6 +9,8 @@ namespace EntityFramework.Explained.Schema.Conventions;
 
 [DocFile]
 [DocFileHeader("Data Annotations: `[Range(...)]`")]
+[DocContent("**Given:**")]
+[DocCodeExample(typeof(Thing))]
 public class DataAnnotations
 {
     [DocExample]
@@ -19,10 +21,9 @@ public class DataAnnotations
         public int SecondInt { get; set; }
     }
 
-    [DocContent("**Given:**")]
-    [DocCodeExample(typeof(Thing))]
     private LinesReader GetReader(DbContext context)
     {
+        Explain.OnlyThis<DataAnnotations>("temp.md");
         var sql = context.Database.GenerateCreateScript();
         return LinesReader.FromText(sql);
     }
