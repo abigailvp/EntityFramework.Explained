@@ -30,6 +30,12 @@ has entity with a default index
 #### Sql Server
 has entity with combined sorted index
 #### Sqlite
+Generates `TEXT`.
+### Unique Constraints
+#### Sql Server
+Has unique index.
+#### Sqlite
+Has combined unique index
 has entity with a default index
 #### Sqlite
 has entity with combined sorted index
