@@ -20,15 +20,6 @@ public class Thing
     public int SecondInt { get; set; }
 }
 ```
-**Given:**
-```csharp
-public class Thing
-{
-    public int Id { get; set; }
-    [Range(0, 10)] // <= We are checking this 
-    public int SecondInt { get; set; }
-}
-```
 #### Sql Server
 `[Range(0,10)]` gets ignored : `[SecondInt] int NOT NULL`.
 #### Sqlite
@@ -39,20 +30,18 @@ has entity with a default index
 #### Sql Server
 has entity with combined sorted index
 #### Sqlite
-Generates `TEXT`.
-### Generic Identity
-#### Sql Server - Generic Identity
-looking what schema does for Generic Identity without mapping
-#### Sqlite - Generic Identity
-looking what schema does for Generic Identity without mapping
-#### Sql Server - Generic Identity
-looking what schema does for Generic Identity with mapping
-#### Sqlite - Generic Identity
-looking what schema does for Generic Identity with mapping
-=======
 has entity with a default index
 #### Sqlite
 has entity with combined sorted index
+### Generic Identity
+#### Sql Server - Generic Identity
+Using a Generic Identity without mapping it in DbContext throws an `InvalidOperationException`.
+#### Sqlite - Generic Identity
+Same behaviour as Sql Server
+#### Sql Server - Generic Identity
+Successfully generates database for Generic Identity with mapping
+#### Sqlite - Generic Identity
+Successfully generates database for Generic Identity with mapping
 ### Required Attributes
 #### Sql Server
 Generates required properties that will be created even if they are null or empty.
