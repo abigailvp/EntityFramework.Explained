@@ -30,16 +30,14 @@ has entity with a default index
 #### Sql Server
 has entity with combined sorted index
 #### Sqlite
-Generates `TEXT`.
-### Table Per Hierarchy
-#### Sql Server
-has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes.
-#### Sqlite
-has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes
-=======
 has entity with a default index
 #### Sqlite
 has entity with combined sorted index
+### Discriminator Column
+#### Sql Server
+has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes. Property with type bool will generate an int in the database in SQL Server (output 0 or 1). So we used type string instead.
+#### Sqlite
+has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes
 ### Generic Identity
 #### Sql Server - Generic Identity
 Using a Generic Identity without mapping it in DbContext throws an `InvalidOperationException`.
@@ -54,6 +52,11 @@ Successfully generates database for Generic Identity with mapping
 Generates required properties that will be created even if they are null or empty.
 #### Sqlite
 Generates required properties that will be created even if they are null or empty.
+### Table Per Hierarchy
+#### Sql Server
+has tph with inherited properties of base class and properties of derived classes.
+#### Sqlite
+has tph with inherited properties of base class and properties of derived classes.
 ### Class Nullability
 #### Sql Server
 `NullThing` Generates `NULL`.
