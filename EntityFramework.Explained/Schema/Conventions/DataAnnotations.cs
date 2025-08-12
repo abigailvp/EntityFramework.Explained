@@ -23,7 +23,6 @@ public class DataAnnotations
 
     private LinesReader GetReader(DbContext context)
     {
-        Explain.OnlyThis<DataAnnotations>("temp.md");
         var sql = context.Database.GenerateCreateScript();
         return LinesReader.FromText(sql);
     }
