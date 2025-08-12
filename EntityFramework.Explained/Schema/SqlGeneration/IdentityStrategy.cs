@@ -77,7 +77,7 @@ public class IdentityStrategy
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
 
-        Assert.Equal("    \"Id\" TEXT NOT NULL CONSTRAINT \"PK_Items\" PRIMARY KEY", reader.SkipToLineContaining("Id"));
+        Assert.Equal("    \"Id\" TEXT NOT NULL CONSTRAINT \"PK_Items\" PRIMARY KEY,", reader.SkipToLineContaining("Id"));
     }
 
     [Fact]
