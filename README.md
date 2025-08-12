@@ -4,35 +4,31 @@
 * [QuickPulse.Explains](https://github.com/kilfour/QuickPulse.Explains)
 * [QuickPulse.Show](https://github.com/kilfour/QuickPulse.Show)
 ## Runtime Behaviour
-### List Properties
-EF Core does not detect in-place mutations to, for instance, a `List<string>` when only a value converter is used. The property reference remains unchanged, so change tracking is not triggered and `SaveChanges()` persists nothing.  
-```csharp
-var converter = new ValueConverter<List<string>, string>(
-        v => string.Join(';', v),
-        v => v.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList()
-    );
-entityTypeBuilder.Property(c => c.StringListProperty)
-    .HasConversion(converter);
-```
-Adding a `ValueComparer<List<string>>` to the mapping allows EF Core to detect in-place list mutations. The comparer inspects the list's contents, so `SaveChanges()` correctly persists changes without replacing the list instance.  
-```csharp
-var converter = new ValueConverter<List<string>, string>(
-        v => string.Join(';', v),
-        v => v.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList()
-    );
-var comparer = new ValueComparer<List<string>>(
-    (c1, c2) => c1!.SequenceEqual(c2!),
-    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-    c => c.ToList()
-);
-entityTypeBuilder.Property(c => c.StringListProperty)
-    .HasConversion(converter)
-    .Metadata.SetValueComparer(comparer);
-```
 ## Schema
-### Default String Length
+### Column Attributes Overrides
 #### Sql Server
-Generates `nvarchar(max)`.
+Generates table with chosen column names of the right type in the given order.
+#### Sqlite
+Generates table with chosen column names of the right type (look at date :O) in the given order.
+### Data Annotations: `[Range(...)]`
+**Given:**
+```csharp
+public class Thing
+{
+    public int Id { get; set; }
+    [Range(0, 10)] // <= We are checking this 
+    public int SecondInt { get; set; }
+}
+```
+#### Sql Server
+`[Range(0,10)]` gets ignored : `[SecondInt] int NOT NULL`.
+#### Sqlite
+Same behaviour as Sql Server: `"SecondInt" INTEGER NOT NULL`.
+### Default Index Names
+#### Sql Server
+has entity with a default index
+#### Sql Server
+has entity with combined sorted index
 #### Sqlite
 Generates `TEXT`.
 ### Unique Constraints
@@ -40,6 +36,33 @@ Generates `TEXT`.
 Has unique index.
 #### Sqlite
 Has combined unique index
+has entity with a default index
+#### Sqlite
+has entity with combined sorted index
+### Discriminator Column
+#### Sql Server
+has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes. Property with type bool will generate an int in the database in SQL Server (output 0 or 1). So we used type string instead.
+#### Sqlite
+has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes
+### Generic Identity
+#### Sql Server - Generic Identity
+Using a Generic Identity without mapping it in DbContext throws an `InvalidOperationException`.
+#### Sqlite - Generic Identity
+Same behaviour as Sql Server
+#### Sql Server - Generic Identity
+Successfully generates database for Generic Identity with mapping
+#### Sqlite - Generic Identity
+Successfully generates database for Generic Identity with mapping
+### Required Attributes
+#### Sql Server
+Generates required properties that will be created even if they are null or empty.
+#### Sqlite
+Generates required properties that will be created even if they are null or empty.
+### Table Per Hierarchy
+#### Sql Server
+has tph with inherited properties of base class and properties of derived classes.
+#### Sqlite
+has tph with inherited properties of base class and properties of derived classes.
 ### Class Nullability
 #### Sql Server
 `NullThing` Generates `NULL`.
