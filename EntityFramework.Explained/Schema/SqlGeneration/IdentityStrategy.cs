@@ -10,7 +10,7 @@ public class IdentityStrategy
 {
     public class UnidentifiedThing
     {
-        public int Id { get; set; }
+        public int Name { get; set; }
     }
 
     [Keyless]
@@ -34,12 +34,12 @@ public class IdentityStrategy
 
     [Fact]
     [DocHeader("Sql Server")]
-    [DocContent("throws InvalidOperationException if primary key is not defined")]
+    [DocContent("throws InvalidOperationException if primary key is not defined or there is no property with 'id' in name")]
     public void SqlServer_No_Pk()
     {
         using var context = new TestSqlServerContext<UnidentifiedThing>();
         var ex = Assert.Throws<InvalidOperationException>(() => context.Database.GenerateCreateScript());
-        Assert.Contains("The entity type 'Id<LazyThing>' requires a primary key to be defined.", ex.Message);
+        Assert.Contains("The entity type 'UnidentifiedThing' requires a primary key to be defined.", ex.Message);
     }
 
     [Fact]
@@ -52,6 +52,7 @@ public class IdentityStrategy
         var reader = LinesReader.FromText(sql);
 
         Assert.Equal("    [Id] uniqueidentifier NOT NULL,", reader.SkipToLineContaining("Id"));
+        Assert.Equal("    [thingy_description] nvarchar(max) NULL,", reader.NextLine());
         Assert.Equal("    CONSTRAINT [PK_Items] PRIMARY KEY ([Id])", reader.NextLine());
     }
 
@@ -90,6 +91,6 @@ public class IdentityStrategy
         var reader = LinesReader.FromText(sql);
 
         Assert.Equal("    \"Id\" TEXT NOT NULL CONSTRAINT \"PK_Items\" PRIMARY KEY,", reader.SkipToLineContaining("Id"));
-        Assert.Equal("    \"thingy_description\" TEXT NOT NULL", reader.NextLine());
+        Assert.Equal("    \"thingy_description\" TEXT NULL", reader.NextLine());
     }
 }
