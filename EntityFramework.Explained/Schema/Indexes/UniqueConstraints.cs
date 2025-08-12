@@ -12,7 +12,6 @@ public class UniqueConstraints
     [Index(nameof(Name), IsUnique = true)]
     public class Thing
     {
-
         public int Id { get; set; }
         public string Name { get; set; } = default!;
     }
@@ -20,7 +19,6 @@ public class UniqueConstraints
     [Index(nameof(Name), nameof(Id), IsUnique = true, IsDescending = new[] { false, true })]
     public class CombinedThing
     {
-
         public int Id { get; set; }
         public string Name { get; set; } = default!;
     }
