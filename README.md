@@ -30,6 +30,13 @@ has entity with a default index
 #### Sql Server
 has entity with combined sorted index
 #### Sqlite
+Generates `TEXT`.
+### Table Per Hierarchy
+#### Sql Server
+has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes.
+#### Sqlite
+has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes
+=======
 has entity with a default index
 #### Sqlite
 has entity with combined sorted index
