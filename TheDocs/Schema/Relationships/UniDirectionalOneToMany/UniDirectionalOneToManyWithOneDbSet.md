@@ -19,27 +19,23 @@ public class Post
 And then adding a `DbSet<Blog>` to the `DbContext` EF generates the following ddl for Sql Server:  
 
 **Blog:**
-```csharp
-    [
-        "CREATE TABLE [Blog] (",
-        "    [Id] int NOT NULL IDENTITY,",
-        "    CONSTRAINT [PK_Blog] PRIMARY KEY ([Id])",
-        ");"
-    ];
+```sql
+CREATE TABLE [Blog] (
+    [Id] int NOT NULL IDENTITY,
+    CONSTRAINT [PK_Blog] PRIMARY KEY ([Id])
+);
 ```
 **Post:**
-```csharp
-    [
-        "CREATE TABLE [Posts] (",
-        "    [Id] int NOT NULL IDENTITY,",
-        "    [BlogId] int NOT NULL,",
-        "    CONSTRAINT [PK_Posts] PRIMARY KEY ([Id]),",
-        "    CONSTRAINT [FK_Posts_Blog_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blog] ([Id]) ON DELETE CASCADE",
-        ");"
-    ];
+```sql
+CREATE TABLE [Posts] (
+    [Id] int NOT NULL IDENTITY,
+    [BlogId] int NOT NULL,
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Posts_Blog_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blog] ([Id]) ON DELETE CASCADE
+);
 ```
 **Index:**
-```csharp
- "CREATE INDEX [IX_Posts_BlogId] ON [Posts] ([BlogId]);";
+```sql
+ CREATE INDEX [IX_Posts_BlogId] ON [Posts] ([BlogId]);;
 ```
 *Note:* No other mappings were added.

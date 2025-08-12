@@ -1,6 +1,7 @@
 using EntityFramework.Explained._Tools.TestContexts;
 using Microsoft.EntityFrameworkCore;
 using QuickPulse.Explains;
+using QuickPulse.Explains.Formatters;
 using QuickPulse.Explains.Text;
 
 namespace EntityFramework.Explained.Schema.Relationships.UniDirectionalOneToMany;
@@ -31,11 +32,11 @@ public class UniDirectionalOneToManyWithOneDbSet
     [DocExample(typeof(Post))]
     [DocContent("And then adding a `DbSet<Blog>` to the `DbContext` EF generates the following ddl for Sql Server:  \n")]
     [DocContent("**Blog:**")]
-    [DocExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForBlog))]
+    [DocExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForBlog), "sql")]
     [DocContent("**Post:**")]
-    [DocExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForPost))]
+    [DocExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForPost), "sql")]
     [DocContent("**Index:**")]
-    [DocExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForIndex))]
+    [DocExample(typeof(UniDirectionalOneToManyWithOneDbSet), nameof(ExpectedDdlScriptForIndex), "sql")]
     [DocContent("*Note:* No other mappings were added.")]
     public void SqlServer()
     {
@@ -58,7 +59,7 @@ public class UniDirectionalOneToManyWithOneDbSet
     }
 
     [CodeSnippet]
-    [DocReplace("return", "")]
+    [CodeFormat(typeof(StringArrayToString))]
     private string[] ExpectedDdlScriptForBlog()
     {
         return
@@ -71,8 +72,8 @@ public class UniDirectionalOneToManyWithOneDbSet
     }
 
     [CodeSnippet]
-    [DocReplace("return", "")]
-    [DocReplace("Item", "Post")]
+    [CodeReplace("Item", "Post")]
+    [CodeFormat(typeof(StringArrayToString))]
     private string[] ExpectedDdlScriptForPost()
     {
         return
@@ -87,8 +88,9 @@ public class UniDirectionalOneToManyWithOneDbSet
     }
 
     [CodeSnippet]
-    [DocReplace("return", "")]
-    [DocReplace("Item", "Post")]
+    [CodeReplace("return", "")]
+    [CodeReplace("Item", "Post")]
+    [CodeReplace("\"", "")]
     private string ExpectedDdlScriptForIndex()
     {
         return "CREATE INDEX [IX_Items_BlogId] ON [Items] ([BlogId]);";

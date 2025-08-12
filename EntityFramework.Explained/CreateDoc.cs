@@ -4,6 +4,7 @@ namespace EntityFramework.Explained;
 
 public class CreateDoc
 {
+    // [Fact]
     [Fact(Skip = "Explicit")]
     public void Now()
     {
