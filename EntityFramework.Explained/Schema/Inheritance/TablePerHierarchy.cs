@@ -64,7 +64,7 @@ public class TablePerHierarchy
 
     [Fact]
     [DocHeader("Sql Server")]
-    [DocContent("has tph with inherited properties of base class and properties of derived classes.")]
+    [DocContent("has table per hierarchy. This is a table that has the base class and derived class. It inherites properties of base class and properties of derived classes.")]
 
     public void SqlServer_Has_TablePerHierarchy()
     {
@@ -81,7 +81,7 @@ public class TablePerHierarchy
 
     [Fact]
     [DocHeader("Sqlite")]
-    [DocContent("has tph with inherited properties of base class and properties of derived classes.")]
+    [DocContent("has table per hierarchy. This is a table that has the base class and derived class. It inherites properties of base class and properties of derived classes.")]
     public void Sqlite_Has_TablePerHierarchy()
     {
         using var context = new AnimalSqliteDbContext<Animal>();
