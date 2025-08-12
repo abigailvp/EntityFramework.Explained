@@ -44,7 +44,7 @@ public class IdentityStrategy
 
     [Fact]
     [DocHeader("Sql Server")]
-    [DocContent("generates id as a column with Primary Key constraint in table when primary key is defined of right type")]
+    [DocContent("generates an id as a column. It also has a Primary Key constraint (id can't be null and has to be unique per record) in table when primary key is defined of right type")]
     public void SqlServer_With_Pk()
     {
         using var context = new TestSqlServerContext<Thing>();
@@ -57,7 +57,7 @@ public class IdentityStrategy
 
     [Fact]
     [DocHeader("Sql Server")]
-    [DocContent("doesn't need a pk if data annotation says so ([Keyless]. You cannot use CRUD on this table.")]
+    [DocContent("doesn't need a pk if data annotation says so ([Keyless]). You cannot use CRUD on this table.")]
     public void SqlServer_With_Keyless_Configured()
     {
         using var context = new TestSqlServerContext<ProfessionalUnidentifiedThing>();
@@ -70,7 +70,7 @@ public class IdentityStrategy
 
     [Fact]
     [DocHeader("Sqlite")]
-    [DocContent("generates Id as a column with Primary Key constraint in table when primary key is defined of right type")]
+    [DocContent("generates an id as a column. It also has a Primary Key constraint (id can't be null and has to be unique per record) in table when primary key is defined of right type")]
     public void Sqlite_With_Pk()
     {
         using var context = new TestSqliteContext<Thing>();
@@ -84,19 +84,6 @@ public class IdentityStrategy
     [DocHeader("Sqlite")]
     [DocContent("only needs an Id for entities, not for valuetypes inside an entity.")]
     public void Sqlite_Only_Id_For_Entities()
-    {
-        using var context = new TestSqliteContext<Thing>();
-        var sql = context.Database.GenerateCreateScript();
-        var reader = LinesReader.FromText(sql);
-
-        Assert.Equal("    \"Id\" TEXT NOT NULL CONSTRAINT \"PK_Items\" PRIMARY KEY,", reader.SkipToLineContaining("Id"));
-        Assert.Equal("    \"thingy_description\" TEXT NOT NULL", reader.NextLine());
-    }
-
-    [Fact]
-    [DocHeader("Sqlite")]
-    [DocContent("can only have specific types, SqlServer is even stricter in which types can be used. ")]
-    public void Sqlite__With_Pk()
     {
         using var context = new TestSqliteContext<Thing>();
         var sql = context.Database.GenerateCreateScript();
