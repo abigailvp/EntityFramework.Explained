@@ -90,6 +90,7 @@ public class UniDirectionalOneToManyWithOneDbSet
     [CodeSnippet]
     [CodeReplace("return", "")]
     [CodeReplace("Item", "Post")]
+    [CodeReplace("\";", "\"")]
     [CodeReplace("\"", "")]
     private string ExpectedDdlScriptForIndex()
     {
