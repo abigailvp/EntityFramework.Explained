@@ -1,13 +1,33 @@
-using EntityFramework.Explained._Tools.Helpers;
 using Microsoft.EntityFrameworkCore;
 using QuickPulse.Explains;
 using QuickPulse.Explains.Text;
 
+
 namespace EntityFramework.Explained.Schema.Conventions;
 
 [DocFile]
+[DocFileHeader("Inheritance:`Table per type`")]
+[DocContent("**If base class is made and derived classes too, table per type is generated like this:**")]
+[DocExample(typeof(AnimalServerDbContext<Animal>))]
 public class TablePerType
 {
+    public class Animal
+    {
+        public int Id { get; set; }
+        public string isPet { get; set; }
+    }
+
+    public class Cat : Animal
+    {
+        public int numberOfMeows { get; set; }
+    }
+
+    public class Dog : Animal
+    {
+        public int numberOfBarks { get; set; }
+    }
+
+    [CodeExample]
     public class AnimalServerDbContext<T> : DbContext where T : class
     {
         public DbSet<Animal> Animals => Set<Animal>();
@@ -18,7 +38,6 @@ public class TablePerType
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Animal>().UseTptMappingStrategy();
 
             modelBuilder.Entity<Dog>()
             .ToTable("Dogs");
@@ -39,36 +58,18 @@ public class TablePerType
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Animal>().UseTptMappingStrategy();
 
             modelBuilder.Entity<Dog>()
             .ToTable("Dogs");
-
             modelBuilder.Entity<Cat>()
             .ToTable("Cats");
         }
     }
 
-    public class Animal
-    {
-        public int Id { get; set; }
-        public string isPet { get; set; }
-    }
-
-    public class Cat : Animal
-    {
-        public int numberOfMeows { get; set; }
-    }
-
-    public class Dog : Animal
-    {
-        public int numberOfBarks { get; set; }
-    }
-
     [Fact]
     [DocHeader("Sql Server")]
-    [DocContent("Creates tables per type classes: Animal, Dog and Cat using UseTptMappingStrategy() and ToTable() method. UseTptMappingStrategy() is necessary because else EF Core thinks you are using TPH. The tabels are one on one related with the property Id.")]
-    public void SqlServer_Uses_TPT_With_Mapping_strategy()
+    [DocContent("Sql Server creates tables for the base AND derived classes using the ToTable() method. The tables are 1:1 related with each other with the property Id. UseTptMappingStrategy() is recommended by Microsoft but this doesn't work here.")]
+    public void SqlServer_Creates_TPT()
     {
         using var context = new AnimalServerDbContext<Animal>();
         var sql = context.Database.GenerateCreateScript();
@@ -95,8 +96,8 @@ public class TablePerType
 
     [Fact]
     [DocHeader("Sqlite")]
-    [DocContent("Creates tables per type classes: Animal, Dog and Cat using UseTptMappingStrategy() and ToTable() method. UseTptMappingStrategy() is necessary because else EF Core thinks you are using TPH. The tabels are one on one related with the property Id.")]
-    public void Sqlite_Uses_Tpt_With_Mapping_strategy()
+    [DocContent("Sqlite creates tables for the base AND derived classes (=tpt) using the ToTable() method. The tables are 1:1 related with each other with the property Id. UseTptMappingStrategy() is not compatible with Sqlite. It will only create one table of the base class.")]
+    public void Sqlite_Creates_TPT()
     {
         using var context = new AnimalSqliteDbContext<Animal>();
         var sql = context.Database.GenerateCreateScript();
@@ -117,4 +118,6 @@ public class TablePerType
         Assert.Equal("    CONSTRAINT \"FK_Dogs_Animals_Id\" FOREIGN KEY (\"Id\") REFERENCES \"Animals\" (\"Id\") ON DELETE CASCADE", reader.NextLine());
 
     }
+
+
 }
