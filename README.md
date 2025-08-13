@@ -1,5 +1,5 @@
 # EntityFramework.Explained
-> Because We Need to Talk About Kevin.
+> Because We Need to Talk About Kevin. 
 
 
 EntityFramework.Explained is a living catalogue of Entity Framework Core’s real-world behaviour.   
